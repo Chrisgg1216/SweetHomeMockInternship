@@ -58,7 +58,7 @@ public class HomePieceOfFurniture extends HomeObject implements PieceOfFurniture
    */
   public enum SortableProperty {CATALOG_ID, NAME, WIDTH, DEPTH, HEIGHT, MOVABLE, 
                                 DOOR_OR_WINDOW, COLOR, TEXTURE, VISIBLE, X, Y, ELEVATION, ANGLE,
-                                PRICE, VALUE_ADDED_TAX, VALUE_ADDED_TAX_PERCENTAGE, PRICE_VALUE_ADDED_TAX_INCLUDED, LEVEL};
+                                PRICE, VALUE_ADDED_TAX, VALUE_ADDED_TAX_PERCENTAGE, PRICE_VALUE_ADDED_TAX_INCLUDED, LEVEL, VOLUME};
   private static final Map<SortableProperty, Comparator<HomePieceOfFurniture>> SORTABLE_PROPERTY_COMPARATORS;
   private static final float [][] IDENTITY = new float [][] {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
   
@@ -100,6 +100,11 @@ public class HomePieceOfFurniture extends HomeObject implements PieceOfFurniture
     SORTABLE_PROPERTY_COMPARATORS.put(SortableProperty.HEIGHT, new Comparator<HomePieceOfFurniture>() {
         public int compare(HomePieceOfFurniture piece1, HomePieceOfFurniture piece2) {
           return HomePieceOfFurniture.compare(piece1.height, piece2.height);
+        }
+      });
+    SORTABLE_PROPERTY_COMPARATORS.put(SortableProperty.VOLUME, new Comparator<HomePieceOfFurniture>() {
+        public int compare(HomePieceOfFurniture piece1, HomePieceOfFurniture piece2) {
+          return HomePieceOfFurniture.compare(piece1.getVolume(), piece2.getVolume());
         }
       });
     SORTABLE_PROPERTY_COMPARATORS.put(SortableProperty.DEPTH, new Comparator<HomePieceOfFurniture>() {
@@ -544,6 +549,13 @@ public class HomePieceOfFurniture extends HomeObject implements PieceOfFurniture
    */
   public float getHeight() {
     return this.height;
+  }
+
+  /**
+   * Returns the volume of this piece of furniture (width x depth x height).
+   */
+  public float getVolume() {
+    return getWidth() * getDepth() * getHeight();
   }
 
   /**
